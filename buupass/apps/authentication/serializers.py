@@ -5,14 +5,14 @@ from rest_framework.validators import UniqueValidator
 
 from buupass.apps.authentication.backends import \
     JWTAuthentication
-from .models import User
+from .models import User, Owner
 
 
-class RegistrationSerializer(serializers.ModelSerializer):
+class OwnerRegistrationSerializer(serializers.ModelSerializer):
     """Serializers registration requests and creates a new user."""
 
     def __init__(self, *args, **kwargs):
-        super(RegistrationSerializer, self).__init__(*args, **kwargs)
+        super(OwnerRegistrationSerializer, self).__init__(*args, **kwargs)
 
         # Override the default error_messages with a custom field error
         for field in self.fields:
@@ -67,7 +67,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
     token = serializers.SerializerMethodField()
 
     class Meta:
-        model = User
+        model = Owner
         # List all of the fields that could possibly be included in a request
         # or response, including fields specified explicitly above.
         fields = ['email', 'username', 'password', 'token']
