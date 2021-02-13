@@ -29,7 +29,7 @@ class ChoresDetail(APIView):
             return Chores.objects.get(pk=pk)
         except Chores.DoesNotExist:
             raise Http404
-        
+
     def put(self, request, pk, format=None):
         chore = self.get_object(pk)
         serializer = ChoresSerializer(chore, data=request.data)
@@ -37,3 +37,8 @@ class ChoresDetail(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request, pk, format=None):
+        chore = self.get_object(pk)
+        serializer = ChoresSerializer(chore)
+        return Response(serializer.data)
