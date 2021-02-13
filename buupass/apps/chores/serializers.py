@@ -7,5 +7,5 @@ class ChoresSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Chores 
-        field = ['id', 'title', 'summary', 'completed', 'date_completed']
+        fields = '__all__'
 
