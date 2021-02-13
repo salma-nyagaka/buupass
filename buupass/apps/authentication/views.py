@@ -46,7 +46,8 @@ class RegistrationAPIView(GenericAPIView):
 
         return get_success_responses(
             data=response_data,
-            message="Successfully created an account with link pay as {}".format(username),
+            message="Successfully created an account with link \
+                pay as {}".format(username),
             status_code=status.HTTP_201_CREATED
         )
 
@@ -55,7 +56,6 @@ class RegistrationAPIView(GenericAPIView):
             data={
                 "message": 'Only POST requests are allowed to this endpoint.'
             })
-
 
 
 class LoginAPIView(GenericAPIView):
@@ -97,4 +97,3 @@ class LoginAPIView(GenericAPIView):
             data={
                 "message": 'Only post requests are allowed to this endpoint.'
             })
-

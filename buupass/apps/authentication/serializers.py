@@ -63,7 +63,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
             'min_length': 'Password must have at least 7 characters',
             'invalid': 'Invalid password',
         }
-    ) 
+    )
     token = serializers.SerializerMethodField()
 
     class Meta:

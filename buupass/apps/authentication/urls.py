@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import RegistrationAPIView, LoginAPIView 
+from .views import RegistrationAPIView, LoginAPIView
 
 app_name = "authentication"
 
