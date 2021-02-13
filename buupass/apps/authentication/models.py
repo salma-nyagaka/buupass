@@ -11,7 +11,7 @@ class User(AbstractUser):
         NANNY = "NANNY", "Nanny"
         OWNER = "ONWER", "Owner"
 
-    base_type = Types.NANNY
+    base_type = "NONE"
 
     # What type of user are we?
     type = models.CharField(
@@ -90,5 +90,5 @@ def create_profile(sender, instance, created, **kwargs):
         user_type = instance.type
         if (user_type == 'NANNY'):
             NannyMore.objects.create(user_id=instance.id)
-        else:
+        elif (user_type == 'OWNER'):
             OwnerMore.objects.create(user_id=instance.id)

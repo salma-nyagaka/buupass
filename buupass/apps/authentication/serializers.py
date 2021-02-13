@@ -5,7 +5,7 @@ from rest_framework.validators import UniqueValidator
 
 from buupass.apps.authentication.backends import \
     JWTAuthentication
-from .models import User, Owner
+from .models import User, Owner, Nanny
 
 
 class OwnerRegistrationSerializer(serializers.ModelSerializer):
@@ -21,19 +21,7 @@ class OwnerRegistrationSerializer(serializers.ModelSerializer):
                 = error_messages['required'] \
                 = 'Please fill in the {}.'.format(field)
 
-    # email = serializers.RegexField(
-    #     regex="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$",
-    #     validators=[
-    #         validators.UniqueValidator(
-    #             queryset=User.objects.all(),
-    #             message='Email address already exists',
-    #         )
-    #     ],
-    # )
 
-    # Ensure that username is unique, does not exist,
-    #  cannot be left be blank, has a minimum of 5 characters
-    # has alphanumerics only
     username = serializers.RegexField(
         regex='^[A-Za-z ]+\d*$',
         min_length=4,
@@ -73,7 +61,63 @@ class OwnerRegistrationSerializer(serializers.ModelSerializer):
         fields = ['email', 'username', 'password', 'token']
 
     def create(self, validated_data):
-        # Use the `create_user` method we wrote earlier to create a new user.
+        user = User.objects.create_user(**validated_data)
+        return user
+
+
+class NannyRegistrationSerializer(serializers.ModelSerializer):
+    """Serializers registration requests and creates a new user."""
+
+    def __init__(self, *args, **kwargs):
+        super(NannyRegistrationSerializer, self).__init__(*args, **kwargs)
+
+        # Override the default error_messages with a custom field error
+        for field in self.fields:
+            error_messages = self.fields[field].error_messages
+            error_messages['null'] = error_messages['blank'] \
+                = error_messages['required'] \
+                = 'Please fill in the {}.'.format(field)
+
+
+    username = serializers.RegexField(
+        regex='^[A-Za-z ]+\d*$',
+        min_length=4,
+        max_length=30,
+        required=True,
+        validators=[UniqueValidator(
+            queryset=User.objects.all(),
+            message='The username already exists. Kindly try another.'
+        )],
+        error_messages={
+            'min_length': 'Username must have a minimum of 4 characters.',
+            'max_length': 'Username must have a maximum of 30 characters.',
+            'invalid': 'Username can only have alphabet characters.'
+        }
+    )
+
+    # Ensure passwords are at least 8 characters long,
+    # at least one letter and at least one number
+    password = serializers.RegexField(
+        regex='^[A-Za-z0-9 ]+\d*$',
+        min_length=4,
+        max_length=30,
+        write_only=True,
+        required=True,
+        error_messages={
+            'max_length': 'Password cannot be more than 128 characters',
+            'min_length': 'Password must have at least 7 characters',
+            'invalid': 'Invalid password',
+        }
+    ) 
+    token = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Nanny
+        # List all of the fields that could possibly be included in a request
+        # or response, including fields specified explicitly above.
+        fields = ['email', 'username', 'password', 'token']
+
+    def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
 

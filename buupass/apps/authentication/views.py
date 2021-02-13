@@ -7,7 +7,6 @@ from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-# from mpesa.apps.api.models.
 
 
 from buupass.apps.authentication.backends import \
@@ -16,8 +15,7 @@ from buupass.helpers.endpoint_response import \
     get_success_responses
 from .models import User, Owner
 from .renderers import UserJSONRenderer
-from .serializers import LoginSerializer, OwnerRegistrationSerializer
-
+from .serializers import LoginSerializer, OwnerRegistrationSerializer, NannyRegistrationSerializer
 
 
 class OwnerRegistratiomAPIView(GenericAPIView):
@@ -57,12 +55,13 @@ class OwnerRegistratiomAPIView(GenericAPIView):
                 "message": 'Only POST requests are allowed to this endpoint.'
             })
 
-class RegistrationAPIView(GenericAPIView):
+
+class NannyRegistratiomAPIView(GenericAPIView):
     """Register a new user"""
     # Allow any user (authenticated or not) to hit this endpoint.
     permission_classes = (AllowAny,)
     renderer_classes = (UserJSONRenderer,)
-    serializer_class = OwnerRegistrationSerializer
+    serializer_class = NannyRegistrationSerializer
 
     def post(self, request, **kwargs):
         """ Signup a new user """
