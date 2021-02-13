@@ -8,7 +8,6 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-
 from buupass.apps.authentication.backends import \
     JWTAuthentication
 from buupass.helpers.endpoint_response import \
