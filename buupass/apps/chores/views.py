@@ -11,8 +11,8 @@ class ChoresList(APIView):
     List all snippets, or create a new snippet.
     """
     def get(self, request, format=None):
-        snippets = Chores.objects.all()
-        serializer = ChoresSerializer(snippets, many=True)
+        chores = Chores.objects.all()
+        serializer = ChoresSerializer(chores, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
@@ -21,3 +21,4 @@ class ChoresList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
