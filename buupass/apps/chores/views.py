@@ -8,7 +8,7 @@ from rest_framework import status
 
 class ChoresList(APIView):
     """
-    List all snippets, or create a new snippet.
+    List all chores, or create a new chore.
     """
     def get(self, request, format=None):
         chores = Chores.objects.all()
@@ -22,3 +22,18 @@ class ChoresList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class ChoresDetail(APIView):
+    def get_object(self, pk):
+        try:
+            return Chores.objects.get(pk=pk)
+        except Chores.DoesNotExist:
+            raise Http404
+        
+    def put(self, request, pk, format=None):
+        chore = self.get_object(pk)
+        serializer = ChoresSerializer(chore, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
