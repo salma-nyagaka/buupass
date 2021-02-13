@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
+
 class User(AbstractUser):
     class Types(models.TextChoices):
         NANNY = "NANNY", "Nanny"
@@ -24,7 +25,6 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
-
     def get_absolute_url(self):
         return reverse("users:detail", kwargs={"username": self.username})
 
@@ -41,17 +41,18 @@ class User(AbstractUser):
 
         except Exception:
             return False
-        
 
 
 class OwnerManager(models.Manager):
     def get_queryset(self, *args, **kwargs):
-        return super().get_queryset(*args, **kwargs).filter(type=User.Types.OWNER)
+        return super().get_queryset(*args, **kwargs).filter(
+            type=User.Types.OWNER)
 
 
 class NannyManager(models.Manager):
     def get_queryset(self, *args, **kwargs):
-        return super().get_queryset(*args, **kwargs).filter(type=User.Types.NANNY)
+        return super().get_queryset(*args, **kwargs).filter(
+            type=User.Types.NANNY)
 
 
 class NannyMore(models.Model):
@@ -91,4 +92,3 @@ def create_profile(sender, instance, created, **kwargs):
             NannyMore.objects.create(user_id=instance.id)
         else:
             OwnerMore.objects.create(user_id=instance.id)
-
