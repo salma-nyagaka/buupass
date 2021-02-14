@@ -17,7 +17,7 @@ from .renderers import UserJSONRenderer
 from .serializers import LoginSerializer, OwnerRegistrationSerializer, NannyRegistrationSerializer
 
 
-class OwnerRegistratiomAPIView(GenericAPIView):
+class OwnerRegistrationAPIView(GenericAPIView):
     """Register a new user"""
     # Allow any user (authenticated or not) to hit this endpoint.
     permission_classes = (AllowAny,)
@@ -55,7 +55,7 @@ class OwnerRegistratiomAPIView(GenericAPIView):
             })
 
 
-class NannyRegistratiomAPIView(GenericAPIView):
+class NannyRegistrationAPIView(GenericAPIView):
     """Register a new user"""
     # Allow any user (authenticated or not) to hit this endpoint.
     permission_classes = (AllowAny,)
