@@ -12,5 +12,6 @@ class Chores(models.Model):
                         editable=False)
     title = models.CharField(max_length=30)
     summary = models.TextField(max_length=300)
+    completed = models.BooleanField(default=False, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     completed_at = models.DateTimeField(auto_now=True, editable=True)
