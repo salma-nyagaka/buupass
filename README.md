@@ -2,24 +2,24 @@
 
 This API implements a role based access system between a House Owner and a House Nanny
 
-## Clone the repository
+### Clone the repository
     git clone -b https://github.com/salma-nyagaka/buupass
     cd into assignment
 
-## Create a virtual environment
+### Create a virtual environment
   `virtualenv venv`
 
-## activate the virtual environment
+### Activate the virtual environment
  `source venv/bin/activate`
  
-## Install the dependancies
-    `pip3 install -r requirements.txt`
+### Install the dependancies
+`pip3 install -r requirements.txt`
 
-## Run the app
+### Run the app
  `python manage.py runserver`
  
 
-# REST API ENDPOINTS
+## REST API ENDPOINTS
 | Request  | Endpoint |
 | ------------- | ------------- |
 | Owner signup  | http://127.0.0.1:8000/api/v1/signup/owner |
