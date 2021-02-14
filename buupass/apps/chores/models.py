@@ -12,13 +12,5 @@ class Chores(models.Model):
                         editable=False)
     title = models.CharField(max_length=30)
     summary = models.TextField(max_length=300)
-    completed = models.BooleanField(default=False, null=True)
-    date_completed = models.DateTimeField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-
-def save(self, *args, **kwargs):
-    if self.completed == True:
-        self.date_completed = datetime.now()
-    super(Chores, self).save(*args, **kwargs)
+    completed_at = models.DateTimeField(auto_now=True, editable=True)
