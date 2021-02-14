@@ -8,7 +8,6 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-
 from buupass.apps.authentication.backends import \
     JWTAuthentication
 from buupass.helpers.endpoint_response import \
@@ -18,7 +17,7 @@ from .renderers import UserJSONRenderer
 from .serializers import LoginSerializer, OwnerRegistrationSerializer, NannyRegistrationSerializer
 
 
-class OwnerRegistratiomAPIView(GenericAPIView):
+class OwnerRegistrationAPIView(GenericAPIView):
     """Register a new user"""
     # Allow any user (authenticated or not) to hit this endpoint.
     permission_classes = (AllowAny,)
@@ -56,7 +55,7 @@ class OwnerRegistratiomAPIView(GenericAPIView):
             })
 
 
-class NannyRegistratiomAPIView(GenericAPIView):
+class NannyRegistrationAPIView(GenericAPIView):
     """Register a new user"""
     # Allow any user (authenticated or not) to hit this endpoint.
     permission_classes = (AllowAny,)
