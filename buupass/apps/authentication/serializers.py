@@ -21,7 +21,6 @@ class OwnerRegistrationSerializer(serializers.ModelSerializer):
                 = error_messages['required'] \
                 = 'Please fill in the {}.'.format(field)
 
-
     username = serializers.RegexField(
         regex='^[A-Za-z ]+\d*$',
         min_length=4,
@@ -84,22 +83,20 @@ class NannyRegistrationSerializer(serializers.ModelSerializer):
                 = error_messages['required'] \
                 = 'Please fill in the {}.'.format(field)
 
-
-    username = serializers.RegexField(
-        regex='^[A-Za-z ]+\d*$',
-        min_length=4,
-        max_length=30,
-        required=True,
-        validators=[UniqueValidator(
-            queryset=User.objects.all(),
-            message='The username already exists. Kindly try another.'
-        )],
-        error_messages={
-            'min_length': 'Username must have a minimum of 4 characters.',
-            'max_length': 'Username must have a maximum of 30 characters.',
-            'invalid': 'Username can only have alphabet characters.'
-        }
-    )
+    username = serializers.RegexField(regex='^[A-Za-z ]+\d*$',
+                                      min_length=4,
+                                      max_length=30,
+                                      required=True,
+                                      validators=[UniqueValidator(
+                                          queryset=User.objects.all(),
+                                          message='The username already exists. Kindly try another.'
+                                      )],
+                                      error_messages={
+                                          'min_length': 'Username must have a minimum of 4 characters.',
+                                          'max_length': 'Username must have a maximum of 30 characters.',
+                                          'invalid': 'Username can only have alphabet characters.'
+                                      }
+                                      )
 
     # Ensure passwords are at least 8 characters long,
     # at least one letter and at least one number
@@ -114,7 +111,7 @@ class NannyRegistrationSerializer(serializers.ModelSerializer):
             'min_length': 'Password must have at least 7 characters',
             'invalid': 'Invalid password',
         }
-    ) 
+    )
     token = serializers.SerializerMethodField()
 
     class Meta:

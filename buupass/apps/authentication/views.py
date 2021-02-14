@@ -14,7 +14,8 @@ from buupass.helpers.endpoint_response import \
     get_success_responses
 from .models import User, Owner
 from .renderers import UserJSONRenderer
-from .serializers import LoginSerializer, OwnerRegistrationSerializer, NannyRegistrationSerializer
+from .serializers import LoginSerializer, OwnerRegistrationSerializer, \
+    NannyRegistrationSerializer
 
 
 class OwnerRegistrationAPIView(GenericAPIView):
@@ -44,7 +45,8 @@ class OwnerRegistrationAPIView(GenericAPIView):
 
         return get_success_responses(
             data=response_data,
-            message="Successfully created an account with link pay as {}".format(username),
+            message="Successfully created an account \
+                with link pay as {}".format(username),
             status_code=status.HTTP_201_CREATED
         )
 

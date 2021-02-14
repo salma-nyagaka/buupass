@@ -105,7 +105,8 @@ class ChoresDetail(APIView):
 
             if (user.type == "OWNER"):
                 chore.delete()
-                return Response({"Success: successfully deleted the chore"}, status=status.HTTP_200_OK)
+                return Response({"Success: successfully \
+                    deleted the chore"}, status=status.HTTP_200_OK)
             return Response("You are not allowed to perform this action")
         except Exception as e:
             return Response({"Error message": "{}".format(e)})

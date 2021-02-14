@@ -5,6 +5,8 @@ from django.utils.translation import gettext_lazy as _
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
+from buupass.helpers.fancy_generator import fancy_id_generator
+
 
 class User(AbstractUser):
     class Types(models.TextChoices):
@@ -18,6 +20,11 @@ class User(AbstractUser):
         _("Type"), max_length=50, choices=Types.choices, default=base_type
     )
 
+    id = models.CharField(db_index=True,
+                          max_length=256,
+                          default=fancy_id_generator,
+                          primary_key=True,
+                          editable=False)
     name = models.CharField(_("Name of User"), blank=True, max_length=255)
     email = models.CharField(blank=False, max_length=300, unique=True)
     phone_number = models.IntegerField(blank=False, default=254000000)
@@ -78,26 +85,6 @@ class Owner(User):
     @property
     def more(self):
         return self.OwnerMore
-    
-    # @receiver(post_save, sender=User)
-    # def create_profile(sender, instance, created, **kwargs):
-    #     """Create a matching profile whenever a user object is created."""
-    #     if created: 
-    #         profile = User.objects.get(id=instance.id)
-    #         profile.type = 'OWNER'
-    #         OwnerMore.objects.create(user_id=instance.id)
-    #         profile.save()
 
     class Meta:
         proxy = True
-
-
-# @receiver(post_save, sender=User)
-# def create_profile(sender, instance, created, **kwargs):
-#     if created:
-#         user_type = instance.type
-#         if (user_type == 'NANNY'):
-#             NannyMore.objects.create(user_id=instance.id)
-#         elif (user_type == 'OWNER'):
-#             OwnerMore.objects.create(user_id=instance.id)
-

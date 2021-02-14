@@ -6,6 +6,5 @@ class ChoresSerializer(serializers.ModelSerializer):
     """class for serializing the chores"""
 
     class Meta:
-        model = Chores 
+        model = Chores
         fields = '__all__'
-
