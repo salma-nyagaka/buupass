@@ -2,6 +2,8 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+
 
 from buupass.helpers.endpoint_response import \
     get_success_responses
@@ -13,6 +15,8 @@ class ChoresList(APIView):
     """
     List all chores, or create a new chore.
     """
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request, format=None):
         chores = Chores.objects.all()
         serializer = ChoresSerializer(chores, many=True)
@@ -39,6 +43,8 @@ class ChoresList(APIView):
 
 class ChoresDetail(APIView):
     """Get a specific chore"""
+    permission_classes = (IsAuthenticated,)
+
     def get_object(self, pk):
         try:
             return Chores.objects.get(pk=pk)
