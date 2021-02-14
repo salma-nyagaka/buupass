@@ -9,16 +9,15 @@ from buupass.helpers.fancy_generator import fancy_id_generator
 
 
 class User(AbstractUser):
-    class Types(models.TextChoices):
-        NANNY = "NANNY", "Nanny"
-        OWNER = "ONWER", "Owner"
+    # class Types(models.TextChoices):
+    #     NANNY = "NANNY", "Nanny"
+    #     OWNER = "ONWER", "Owner"
 
-    base_type = "NONE"
+    # base_type = "NONE"
 
     # What type of user are we?
-    type = models.CharField(
-        _("Type"), max_length=50, choices=Types.choices, default=base_type
-    )
+    type = ("NANNY", "Nanny"
+        "ONWER", "Owner")
 
     id = models.CharField(db_index=True,
                           max_length=256,
@@ -67,7 +66,7 @@ class NannyMore(models.Model):
 
 
 class Nanny(User):
-    base_type = User.Types.NANNY
+    base_type = 'NANNY'
     objects = NannyManager()
 
     class Meta:
@@ -79,7 +78,7 @@ class OwnerMore(models.Model):
 
 
 class Owner(User):
-    base_type = User.Types.OWNER
+    base_type = 'OWNER'
     objects = OwnerManager()
 
     @property
