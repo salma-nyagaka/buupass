@@ -69,7 +69,6 @@ class Nanny(User):
 
 class OwnerMore(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    house_number = models.CharField(max_length=255)
 
 
 class Owner(User):
@@ -79,16 +78,26 @@ class Owner(User):
     @property
     def more(self):
         return self.OwnerMore
+    
+    # @receiver(post_save, sender=User)
+    # def create_profile(sender, instance, created, **kwargs):
+    #     """Create a matching profile whenever a user object is created."""
+    #     if created: 
+    #         profile = User.objects.get(id=instance.id)
+    #         profile.type = 'OWNER'
+    #         OwnerMore.objects.create(user_id=instance.id)
+    #         profile.save()
 
     class Meta:
         proxy = True
 
 
-@receiver(post_save, sender=User)
-def create_profile(sender, instance, created, **kwargs):
-    if created:
-        user_type = instance.type
-        if (user_type == 'NANNY'):
-            NannyMore.objects.create(user_id=instance.id)
-        elif (user_type == 'OWNER'):
-            OwnerMore.objects.create(user_id=instance.id)
+# @receiver(post_save, sender=User)
+# def create_profile(sender, instance, created, **kwargs):
+#     if created:
+#         user_type = instance.type
+#         if (user_type == 'NANNY'):
+#             NannyMore.objects.create(user_id=instance.id)
+#         elif (user_type == 'OWNER'):
+#             OwnerMore.objects.create(user_id=instance.id)
+

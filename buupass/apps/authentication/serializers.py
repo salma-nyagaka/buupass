@@ -5,7 +5,7 @@ from rest_framework.validators import UniqueValidator
 
 from buupass.apps.authentication.backends import \
     JWTAuthentication
-from .models import User, Owner, Nanny
+from .models import User, Owner, Nanny, OwnerMore, NannyMore
 
 
 class OwnerRegistrationSerializer(serializers.ModelSerializer):
@@ -62,6 +62,12 @@ class OwnerRegistrationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
+        # import pdb
+        # pdb.set_trace()
+        user_id = User.objects.get(id=user.id)
+        user_id.type = "OWNER"
+        OwnerMore.objects.create(user_id=user_id.id)
+        user_id.save()
         return user
 
 
@@ -119,6 +125,10 @@ class NannyRegistrationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
+        user_id = User.objects.get(id=user.id)
+        user_id.type = "NANNY"
+        NannyMore.objects.create(user_id=user_id.id)
+        user_id.save()
         return user
 
 
