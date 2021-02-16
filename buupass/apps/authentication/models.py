@@ -50,12 +50,6 @@ class User(AbstractUser):
             return False
 
 
-class OwnerManager(models.Manager):
-    def get_queryset(self, *args, **kwargs):
-        return super().get_queryset(*args, **kwargs).filter(
-            type=User.Types.OWNER)
-
-
 class NannyManager(models.Manager):
     def get_queryset(self, *args, **kwargs):
         return super().get_queryset(*args, **kwargs).filter(
@@ -70,9 +64,18 @@ class Nanny(User):
     base_type = User.Types.NANNY
     objects = NannyManager()
 
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.type = User.Types.NANNY
+        return super().save(*args, **kwargs)
+
     class Meta:
         proxy = True
 
+class OwnerManager(models.Manager):
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).filter(
+            type=User.Types.OWNER)
 
 class OwnerMore(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

@@ -35,7 +35,7 @@ class JWTAuthentication(TokenAuthentication):
             'nbf': datetime.datetime.utcnow() + datetime.timedelta(minutes=-5),
             'exp': datetime.datetime.utcnow() + datetime.timedelta(days=7)
         }, secret)
-        # decode the byte type token to
+        # decode the byte type token
         token = token.decode('utf-8')
         return token
 
