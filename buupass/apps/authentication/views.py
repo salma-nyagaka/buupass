@@ -32,8 +32,8 @@ class OwnerRegistrationAPIView(GenericAPIView):
             'username', None), request.data.get('password', None)
 
         user = {"email": email, "username": username, "password": password}
-        import pdb
-        pdb.set_trace()
+        # import pdb
+        # pdb.set_trace()
         serializer = self.serializer_class(data=user)
         serializer.is_valid(raise_exception=True)
 
